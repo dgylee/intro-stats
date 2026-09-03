@@ -1,0 +1,11 @@
+---
+title: "Example 1: Random sampling (heat map)"
+# format: revealjs
+format: html
+---
+
+### Random sampling
+Here is more text!
+
+### Visualization (heat map)
+

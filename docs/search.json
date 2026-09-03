@@ -1,16 +1,23 @@
 [
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "examples/ex1-random-sampling.html",
+    "href": "examples/ex1-random-sampling.html",
+    "title": "Example 1: Random sampling (heat map)",
     "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
+    "text": "Random sampling\nHere is more text!\n\n\nVisualization (heat map)"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Examples for Intoductory Statistics",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+    "text": "The following are examples used throughout my introductory statistics course(s), albeit in no particular order.\n\nExample 1: Random sampling (heat map)\n\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "The examples posted on this site are for introductory statistics used while teaching. They are not comprehensive (nor 100% error free), but serve the purpose of either showcasing important examples (e.g. results of a “not-so-random” test) or interactive learning (e.g. heatmaps of random sampling) that students can edit live through their web browser."
   }
 ]

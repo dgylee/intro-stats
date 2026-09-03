@@ -2,8 +2,4 @@
 title: "About"
 ---
 
-About this site
-
-```{r}
-1 + 1
-```
+The examples posted on this site are for introductory statistics used while teaching. They are not comprehensive (nor 100% error free), but serve the purpose of either showcasing important examples (e.g. results of a "not-so-random" test) or interactive learning (e.g. heatmaps of random sampling) that students can edit live through their web browser.
