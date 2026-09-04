@@ -15,3 +15,4 @@ The following examples are used throughout my introductory statistics course(s),
 
 - [Example 1: Random sampling and visualizing via heatmaps](examples/ex1-random-sampling.qmd)
 - Example 2
+- Example 3

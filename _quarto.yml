@@ -13,6 +13,6 @@ website:
 format:
   html:
     theme: comos
-    css: docs/styles.css
+    css: styles.css
     toc: true
 
