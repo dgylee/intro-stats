@@ -30,8 +30,10 @@ website:
         text: Home
       - text: Examples
         menu:
-          - href: examples/ex1-random-sampling.qmd
-            text: Example 1
+          - href: examples/ex1-pepsi-v-coke.qmd
+            text: Pepsi vs Coke
+          - href: examples/ex2-random-sampling.qmd
+            text: Visualizing randomness
 
 format:
   html:

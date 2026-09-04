@@ -1,0 +1,202 @@
+---
+title: "Non-random sampling: Pepsi vs. Coke"
+format: live-html
+engine: knitr
+include-in-header:
+  - text: |
+      <link rel="stylesheet" href="../styles.css">
+---
+
+{{< include ../_extensions/r-wasm/live/_knitr.qmd >}}
+
+Below are the details of the setup but hidden from observers during the simulation presentation.
+
+<details>
+<summary>Details</summary>
+
+### "Execution" steps:
+- Class is polled about preference between Pepsi and Coke using an anonymous survey (e.g. Slido) but results are not known
+- Example: 18 prefer Pepsi vs 40 prefer Coke
+- In order, the input is provided in the code below and the results are simulated r times
+- IMPORTANT: This example is setup to create a biased result where Pepsi is preferred over Coke
+
+The code looks like this:
+```{r,eval=FALSE}
+r <- 10
+do.call(rbind, lapply(1:r, function(x) RCT(18, 40)))
+```
+
+and required two inputs:
+
+- `pepsi = 18`
+- `coke = 40`
+
+while containing two default inputs (lower and upper limit of the proportion of the population size used to generate the sample)
+
+- `ll = 0.20`
+- `ul = 0.70`
+
+along with an optional random seed (i.e. `set.seed`) so a demonstration can be reproduced exactly.
+
+Example output:
+
+```{r, eval=F}
+        p_pepsi    p_coke   n       
+ [1,] 0.7222222 0.2777778  18 184450
+ [2,] 0.6923077 0.3076923  13 230120
+ [3,] 0.7058824 0.2941176  17  64978
+ [4,] 0.6923077 0.3076923  13  60157
+ [5,] 0.7333333 0.2666667  15   8160
+ [6,] 0.6923077 0.3076923  13  60487
+ [7,] 0.7058824 0.2941176  17   3341
+ [8,] 0.7142857 0.2857143  14  30196
+ [9,] 0.7142857 0.2857143  14  22713
+[10,] 0.7142857 0.2857143  14 230149
+```
+Output includes proportion that prefer Pepsi, coke, sample size, and number of (repeated, failed) trials to get this "result". Sometimes, it may take several attempts of "failed" samples to get the result and others, only 1 time, which is actually great for teaching purposes, highlighting that (legitimately) the SRS can fail.
+
+</details>
+
+```{webr}
+#| echo: false
+  RCT <- function(pepsi,coke,ll=0.2,ul=0.7){
+    options(scipen = 999)
+    popn  <- rep(c('p','c'),times=c(pepsi,coke))
+    ppep  <- pepsi/(pepsi+coke)
+    pcok  <- 1-ppep
+    iter  <- 10000
+    nst   <- round((pepsi+coke)*ll)
+    if(nst %% 2 == 0) nst <- nst + 1
+    n     <- seq(nst,round((pepsi+coke)*ul,0))
+    n     <- sample(n,length(n))
+    count <- 0
+    exit  <- FALSE
+    exiti <- FALSE
+    exitj <- FALSE
+    maxed <- FALSE
+    while(!exit){
+      for(i in n){
+        for(j in 1:iter){
+          count <- count + 1
+          samp  <- sample(popn,i)
+          if(pepsi > coke){
+            phat  <- mean(samp=='p')
+            if(phat > ppep){
+              exitj <- !exitj
+              # cat('flag1\n')
+            }
+          } else {
+            phat  <- mean(samp=='p')
+            if(phat > pcok){
+              exitj <- !exitj
+              # cat(phat,'\n')
+              # cat(pcok,'\n')
+              # cat('flag2\n')
+            }
+          }
+          if(exitj){
+            exiti <- !exiti
+            # cat('flag3\n')
+            break
+          } 
+        }
+        if(exiti){
+          # cat('flag4\n')
+          break
+        }
+      }
+      if(exiti) exit <- !exit
+      if(i==n[length(n)] & j==iter){
+        exit  <- !exit
+        maxed <- !maxed
+      }
+    }
+    if(maxed){
+      out <- c(NA,NA,i,count)
+    } else {
+      out <- c(phat,1-phat,i,count)
+    }
+    names(out) <- c('p_pepsi','p_coke','  n',' ')
+    return(out)
+  }
+```
+
+
+```{webr}
+#| min-lines: 5
+# Inputs: r = number of trials
+
+r <- 10
+do.call(rbind, lapply(1:r, function(x) RCT(17, 21)))
+
+```
+
+For those interested, I have included the actual code for the function `RCT`. This is very much outside of the context of this course; however, as (somewhat) described above, this code will take the count for pepsi and coke (in that order) and then determine who is the "favourite", then it will purposefully sample (and re-sample while keeping track of the number of times executed) until the opposite "result" is observed. The sample size varies and is defined by the `ll` and `ul` (the lower and upper limit for the sample size based on the total population).
+
+<details>
+<summary>R Code</summary>
+
+```{r,eval=FALSE}
+  RCT <- function(pepsi,coke,ll=0.2,ul=0.7){
+    options(scipen = 999)
+    popn  <- rep(c('p','c'),times=c(pepsi,coke))
+    ppep  <- pepsi/(pepsi+coke)
+    pcok  <- 1-ppep
+    iter  <- 10000
+    nst   <- round((pepsi+coke)*ll)
+    if(nst %% 2 == 0) nst <- nst + 1
+    n     <- seq(nst,round((pepsi+coke)*ul,0))
+    n     <- sample(n,length(n))
+    count <- 0
+    exit  <- FALSE
+    exiti <- FALSE
+    exitj <- FALSE
+    maxed <- FALSE
+    while(!exit){
+      for(i in n){
+        for(j in 1:iter){
+          count <- count + 1
+          samp  <- sample(popn,i)
+          if(pepsi > coke){
+            phat  <- mean(samp=='p')
+            if(phat > ppep){
+              exitj <- !exitj
+              # cat('flag1\n')
+            }
+          } else {
+            phat  <- mean(samp=='p')
+            if(phat > pcok){
+              exitj <- !exitj
+              # cat(phat,'\n')
+              # cat(pcok,'\n')
+              # cat('flag2\n')
+            }
+          }
+          if(exitj){
+            exiti <- !exiti
+            # cat('flag3\n')
+            break
+          } 
+        }
+        if(exiti){
+          # cat('flag4\n')
+          break
+        }
+      }
+      if(exiti) exit <- !exit
+      if(i==n[length(n)] & j==iter){
+        exit  <- !exit
+        maxed <- !maxed
+      }
+    }
+    if(maxed){
+      out <- c(NA,NA,i,count)
+    } else {
+      out <- c(phat,1-phat,i,count)
+    }
+    names(out) <- c('p_pepsi','p_coke','  n',' ')
+    return(out)
+  }
+```
+
+</details>

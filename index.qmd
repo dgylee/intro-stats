@@ -8,5 +8,5 @@ title: "Examples for Intoductory Statistics"
 
 The following examples are used throughout my introductory statistics course(s), albeit in no particular order, and are free to reference but are not free from errors (i.e. for demonstration purposes-only).
 
-- [Example 1: Random sampling and visualizing via heatmaps](examples/ex1-random-sampling.qmd)
-- [Example 2](examples/ex1-random-sampling.qmd)
+- [Example 1: Non-random sampling: Pepsi vs. Coke](examples/ex1-pepsi-v-coke.qmd)
+- [Example 2: Random sampling and visualizing via heatmaps](examples/ex2-random-sampling.qmd)
