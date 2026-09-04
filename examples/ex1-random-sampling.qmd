@@ -136,5 +136,5 @@ random_heatmap(10, 1:20, table=TRUE)
 ``` 
 It is worth noting that:
 
-- For more than 100 trials, it's gets too hard to visualize and so the heatmap isn't printed anymore.
-- For each of the values (1:20), they "should" be observed half of the time, but that isn't always the case; however, if you look at the frequency, you'll (A) see some are (for example) observed more than 5 times while some are observed less than 5 times but (on average), the number of times should be around 5, and (B) if you up the number of trials to 100, you'll see a similar variability but they (again) hover somewhere around 50  
+- For more than 100 trials, the graph gets a bit weird and so the heatmap won't print out and instead, you'll the frequency table.
+- For each of the values (1:20), they "should" be observed half of the time, but that isn't always the case; however, if you look at the frequency, you'll (A) see some are (for example) observed more than 5 times while some are observed less than 5 times but (on average), the number of times should be around 5, and (B) if you increase the number of trials to 100, you'll see a similar variability but they (again) hover somewhere around half (or 50 times).  
