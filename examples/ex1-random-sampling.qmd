@@ -126,6 +126,8 @@ If you have repeatedly hit the `▶ Run Code` button (sans `set.seed`), then you
 Similar to the code above, we can play around with the following chunk of code that uses a custom function created for this purpose `random_heatmap`, where the only inputs are (1) how many trials (`n_trials`) and (2) the values (`values`) we are selecting from. By default, the inputs are 10 trials and selecting from the numbers 1:20 but feel free to modify these values to see how the heatmap changes. For example, since the code will always split the data into two groups, if you swap the `values` to (for example) 1:30, then 15 values will be highlighted in the map.
 
 ```{webr}
+#| persist: true
+
 random_heatmap(10, 1:20)
 ```
 
