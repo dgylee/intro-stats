@@ -2,6 +2,7 @@
 title: "Examples for Intoductory Statistics"
 
 # Steps:
+# > cd intro-stats
 # > quarto render
 # > git add .
 # > git commit -m "Update webR examples"
