@@ -1,5 +1,5 @@
 ---
-title: "Example 1: Random sampling (heat map)"
+title: "Example 1: Random sampling (visualized via heatmaps)"
 format: live-html
 engine: knitr
 webr:
