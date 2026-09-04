@@ -4,4 +4,4 @@ title: "Examples for Intoductory Statistics"
 
 The following are examples used throughout my introductory statistics course(s), albeit in no particular order.
 
-- [Example 1: Random sampling (heat map)](examples/ex1-random-sampling.qmd)
+- [Example 1: Random sampling (via heat map)](examples/ex1-random-sampling.qmd)
