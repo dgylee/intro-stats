@@ -1,11 +1,140 @@
 ---
 title: "Example 1: Random sampling (heat map)"
-# format: revealjs
-format: html
+format: live-html
+engine: knitr
+webr:
+  packages:
+    - tidyverse
+  baseUrl: 'https://webr.r-wasm.org/latest'
+  
+# Source: https://www.youtube.com/watch?v=QAI8VVmIM4g
 ---
 
-### Random sampling
-Here is more text!
+{{< include ../_extensions/r-wasm/live/_knitr.qmd >}}
 
+### Randomness (sampling and otherwise)
+Randomness will have important ramifications in statistics, both in terms of representativeness and reducing bias, although most discussions will be limited and involve a lot of handwaving. Nonetheless, when things are done "at random", then we should not (for example) be able to predict with 100% certainty an outcome.
+
+Per the example that we did (or will discuss), when we take a random sample of 10 numbers from 20, then we should not be able to predict what 10 numbers will be part of the sample. In R, we can use the following code to generate a sample of 10 numbers from 1 through 20:
+
+```{webr}
+# Inputs:
+# - First: values to sample from
+# - Second: sample size
+
+sample(1:20,10)
+
+```
+
+Importantly, if you run the code your output will be different from mine, the person next to you, and anyone else who runs the same code. However, if you use the command `set.seed(1)` before running the `sample` function like so,
+
+```{r, eval=FALSE}
+# Re-running the code so we get the same value
+
+set.seed(1)
+sample(1:20,10)
+
+```
+
+```{r, include=FALSE}
+# Re-running the code so we get the same value
+
+set.seed(1)
+values <- sample(1:20,10)
+
+```
+we get the same results of: `r values`. We don't need to get into the specifics, but setting the seed to a specific number creates reproducible results (i.e. no `set.seed`, the results will change but with it, you'll get the same results no matter how many times you hit the `▶ Run Code` button).
+
+```{webr}
+#| echo: false
+random_heatmap <- function(n_trials=10, values=1:20, table=FALSE) {
+  
+  # Number of values selected in each trial
+  n_select <- length(values) / 2
+  
+  # Generate random samples
+  trials <- lapply(1:n_trials, function(i) {
+    sample(values, n_select)
+  })
+  
+  # Create selection matrix
+  heatmap_data <- t(sapply(trials, function(x) {
+    values %in% x
+  }))
+  
+  # Count how many times each value was selected
+  counts <- apply(heatmap_data, 2, sum)
+  
+  # Create heatmap data frame
+  df <- as.data.frame(as.table(heatmap_data))
+  names(df) <- c("Trial", "Value", "Selected")
+  
+  df$Trial <- as.numeric(df$Trial)
+  df$Value <- as.numeric(df$Value)
+  
+  # Create heatmap
+  p <- ggplot(df, aes(x = Value, y = Trial, fill = Selected)) +
+    geom_tile(color = "white", linewidth = 0.5) +
+    scale_fill_manual(
+      values = c("FALSE" = "white", "TRUE" = "steelblue"),
+      labels = c("FALSE" = "Not selected", "TRUE" = "Selected"),
+      name = NULL
+    ) +
+    scale_x_continuous(
+      breaks = values,
+      expand = c(0, 0)
+    ) +
+    scale_y_continuous(
+      breaks = 1:n_trials,
+      expand = c(0, 0),
+      trans = "reverse"
+    ) +
+    labs(
+      title = "Random sampling",
+      subtitle = paste(
+        n_trials, "trials;",
+        n_select, "values selected per trial"
+      ),
+      x = "Value",
+      y = "Trial"
+    ) +
+    theme_minimal() +
+    theme(
+      panel.grid = element_blank(),
+      legend.position = "top"
+    )
+  
+  # Create frequency table
+  frequency_table <- rbind(
+    Value = values,
+    Frequency = counts
+  )
+  
+  # Display both outputs
+  if(n_trials <= 100){
+    print(p)
+  } else {
+    table <- TRUE
+  }
+  if(table) print(frequency_table)
+}
+
+```
 ### Visualization (heat map)
+If you have repeatedly hit the `▶ Run Code` button (sans `set.seed`), then you'll notice that the 10 numbers have changed repeatedly. Importantly, if we are truly randomly sampling 10 numbers from a set of 20, then if we visualized which of the 10 numbers (from our set of 20) are selected over and over again, there should be no obvious patterns. To visualize this, a heatmap (a data visualization that converts a matrix of data into colors) is a great option - you can learn more in our DSCI204 class.
 
+Similar to the code above, we can play around with the following chunk of code that uses a custom function created for this purpose `random_heatmap`, where the only inputs are (1) how many trials (`n_trials`) and (2) the values (`values`) we are selecting from. By default, the inputs are 10 trials and selecting from the numbers 1:20 but feel free to modify these values to see how the heatmap changes. For example, since the code will always split the data into two groups, if you swap the `values` to (for example) 1:30, then 15 values will be highlighted in the map.
+
+```{webr}
+random_heatmap(10, 1:20)
+```
+
+If you play around with this, you'll (hopefully) notice that there is no distinct pattern (i.e. it is random) and (if you want to), you can add in an option to print the frequency table of the values you are sampling from to see their frequency across the 10 trials. 
+
+```{r, eval=FALSE}
+random_heatmap(10, 1:20, table=TRUE)
+``` 
+It is worth noting that:
+
+- For more than 100 trials, it's gets too hard to visualize and so the heatmap isn't printed anymore.
+- For each of the values (1:20), they "should" be observed half of the time, but that isn't always the case; however, if you look at the frequency, you'll (A) see some are (for example) observed more than 5 times while some are observed less than 5 times but (on average), the number of times should be around 5, and (B) if you up the number of trials to 100, you'll see a similar variability but they (again) hover somewhere around 50  
