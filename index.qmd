@@ -11,6 +11,6 @@ title: "Examples for Intoductory Statistics"
 # git push
 ---
 
-The following examples are used throughout my introductory statistics course(s), albeit in no particular order, and are free to reference but are not free from errors (i.e. demonstration purposes-only).
+The following examples are used throughout my introductory statistics course(s), albeit in no particular order, and are free to reference but are not free from errors (i.e. for demonstration purposes-only).
 
 - [Example 1: Random sampling and visualizing via heatmaps](examples/ex1-random-sampling.qmd)
