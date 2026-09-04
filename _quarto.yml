@@ -1,18 +1,40 @@
+# project:
+#   type: website
+#   output-dir: docs
+# 
+# website:
+#   title: "Intro Stats"
+#   navbar:
+#     left:
+#       - about.qmd
+#       - href: index.qmd
+#         text: Home
+# 
+# format:
+#   html:
+#     theme: cosmo
+#     css: ./styles.css
+#     toc: true
+# 
 project:
   type: website
   output-dir: docs
 
 website:
-  title: "Intro Stats"
+  title: " "
   navbar:
     left:
-      - about.qmd
+      - href: about.qmd
+        text: About
       - href: index.qmd
         text: Home
+      - text: Examples
+        menu:
+          - href: examples/ex1-random-sampling.qmd
+            text: Example 1
 
 format:
   html:
     theme: cosmo
-    css: styles.css
+    css: ./styles.css
     toc: true
-

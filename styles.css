@@ -1,9 +1,20 @@
 /* css styles */
+/*
 .navbar {
   background-color: #001b40 !important;
 }
 
 .navbar-brand,
 .navbar-nav .nav-link {
+  color: white !important;
+}
+*/
+
+#quarto-header .navbar {
+  background-color: #001b40 !important;
+}
+
+#quarto-header .navbar-brand,
+#quarto-header .navbar-nav .nav-link {
   color: white !important;
 }

@@ -4,14 +4,9 @@ title: "Examples for Intoductory Statistics"
 # Steps:
 # cd intro-stats
 # quarto render && git add . && git commit -m "update webR examples" && git push 
-#
-# quarto render
-# git add .
-# git commit -m "Update webR examples"
-# git push
 ---
 
 The following examples are used throughout my introductory statistics course(s), albeit in no particular order, and are free to reference but are not free from errors (i.e. for demonstration purposes-only).
 
 - [Example 1: Random sampling and visualizing via heatmaps](examples/ex1-random-sampling.qmd)
-- Example 2
+- [Example 2](examples/ex1-random-sampling.qmd)
