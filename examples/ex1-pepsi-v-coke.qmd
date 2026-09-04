@@ -131,7 +131,7 @@ do.call(rbind, lapply(1:r, function(x) RCT(17, 21)))
 
 ```
 
-For those interested, I have included the actual code for the function `RCT`. This is very much outside of the context of this course; however, as (somewhat) described above, this code will take the count for pepsi and coke (in that order) and then determine who is the "favourite", then it will purposefully sample (and re-sample while keeping track of the number of times executed) until the opposite "result" is observed. The sample size varies and is defined by the `ll` and `ul` (the lower and upper limit for the sample size based on the total population).
+For those interested, I have included the actual code for the function `RCT`. This is very much outside of the context of this course; however, as (somewhat) described above, this code will take the count for pepsi and coke (in that order) then sample (and re-sample if need be, while keeping track of the number of times executed) until the "result" is observed. The sample size varies and is defined by the `ll` and `ul` (the lower and upper limit for the sample size based on the total population).
 
 <details>
 <summary>R Code</summary>
